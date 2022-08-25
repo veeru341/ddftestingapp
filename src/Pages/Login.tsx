@@ -29,7 +29,7 @@ export default function Login() {
           </form>
           <div className="loginpagebuttons">
             <button className="logincancel">Cancel</button>
-            <Link to="/"><button className="loginbutton" onClick={handleLogin}>Login1</button></Link>
+            <Link to="/"><button className="loginbutton" onClick={handleLogin}>Login</button></Link>
           </div>
         </div>
       </Grid>
