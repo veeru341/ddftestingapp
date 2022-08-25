@@ -178,8 +178,8 @@ export default function CreateRecipe() {
                                     </TableBody>
                                 </Table>
                             </TableContainer>
-                        </Grid>)
-                        :(
+                        </Grid>):
+                        (
                             <Grid item xs={12} md={10}>
                             <TableContainer className={classes.tableContainer} component={Paper}>
                                 <Table className={classes.table}>

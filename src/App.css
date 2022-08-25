@@ -354,11 +354,6 @@ input[type=reset]:hover {
   color: #CDCDCD
 }
 
-.personicon {
-  font-size: 50px;
-  color: #CBCBCB
-}
-
 .loginform {
   display: flex;
   margin-top: 50px;

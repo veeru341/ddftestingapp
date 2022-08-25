@@ -13,7 +13,8 @@ import SearchRecipe from "./Pages/SearchRecipe";
 import CreateRecipeWizard from './Pages/CreateRecipeWizard';
 import CreateRecipeWizard2 from './Pages/CreateRecipeWizard2';
 import CreateRecipe from "./Pages/CreateRecipe"
-import JsonEditStructure from "./components/JsonEditStructure"
+import JsonEditStructure from "./components/JsonEditStructure";
+import CreateRecipeCustomizations from './Pages/CreateRecipeCustomizations';
 
 export default function App() {
 
@@ -38,6 +39,7 @@ export default function App() {
               <Route path="/searchrecipe" element={<SearchRecipe />} />
               <Route path="/login" element={<Login />} />
               <Route path="/jsoneditstructure" element={<JsonEditStructure />} />
+              <Route path="/createrecipecustomizations" element={<CreateRecipeCustomizations />} />
             </Routes>
           </div> :
           <div>
