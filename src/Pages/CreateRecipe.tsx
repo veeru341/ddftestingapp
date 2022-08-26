@@ -133,7 +133,7 @@ export default function CreateRecipe() {
                         </select>)
                     }
                 </Grid>
-                <Grid item xs={12} md={10} style={{ display: "flex" }}>
+                <Grid item xs={12} md={8} style={{ display: "flex" }}>
                     <button style={{
                         backgroundColor: isshowing ? 'black' : '#D9D9D9',
                         color: isshowing ? 'white' : 'black'
@@ -142,7 +142,9 @@ export default function CreateRecipe() {
                         backgroundColor: isshowing ? '#D9D9D9' : 'black',
                         color: isshowing ? 'black' : 'white'
                     }} className="createrecipelabel1" onClick={handleDetails}>Matrix</button>
-
+                </Grid>
+                <Grid item xs={12} md={2}>
+                    <Link to="/createrecipecustomizations" style={{textDecoration:"none", cursor:"pointer"}}><button className="createrecipelabel2">ROR</button></Link>
                 </Grid>
                 <Grid container>
                     <Grid item xs={12} md={2}></Grid>
