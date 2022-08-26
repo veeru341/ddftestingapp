@@ -105,10 +105,28 @@ export default function CreateRecipe() {
         MapName3: ""
     })
 
-    const { ParameterName, Value, UOM, Min, Max, MapName1, MapName2, MapName3} = inputdata;
+    const [editdata, setEditData] = useState<any>({})
 
-    const handleInputChange = (evt : any) => {
-        setInputData({...inputdata, [evt.target.name] : [evt.target.value]})
+    const { ParameterName, Value, UOM, Min, Max, MapName1, MapName2, MapName3 } = inputdata;
+
+    const handleInputChange = (evt: any) => {
+        setInputData({ ...inputdata, [evt.target.name]: [evt.target.value] })
+    }
+
+    const submithandler = (e: any) => {
+        e.preventDefault();
+        setRows([...rows, inputdata]);
+        setInputData({
+            ParameterName: "",
+            Value: "",
+            UOM: "",
+            Min: "",
+            Max: "",
+            MapName1: "",
+            MapName2: "",
+            MapName3: ""
+        });
+        setOpen(false);
     }
 
     const classes = useStyles();
@@ -117,13 +135,28 @@ export default function CreateRecipe() {
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
 
+    const [editopen, setEditOpen] = useState(false);
+    const handleEditClose = () => setEditOpen(false);
+
     const handledelete = (index: any) => {
         setRows(rows.filter((i, j) => j !== index))
     }
 
+    const handleedit = (index : any) => {
+        setEditData(rows.filter((i, j) => j == index));
+        console.log("editing data checking", editdata)
+        setEditOpen(true);;
+    }
+
     return (
-        <Grid container style={{ padding: "20px" }} height="90vh">
-            <Grid item xs={12} style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+        <Grid container style={{ padding: "20px", display:"flex", alignItems:"center", justifyContent:"center"}}>
+            <Grid item xs={12}>
+                <div style={{display:"flex",justifyContent:"space-around"}}>
+                    <button className="addnewbutton" onClick={handleOpen}>Add New</button>
+                    <button className="addnewbutton" onClick={handleOpen}>Search</button>
+                </div>
+            </Grid>
+            <Grid item xs={12} style={{ display: "flex", alignItems: "center" }}>
                 <TableContainer className={classes.tableContainer} component={Paper}>
                     <Table className={classes.table}>
                         <TableHead>
@@ -152,8 +185,8 @@ export default function CreateRecipe() {
                                     <StyledTableCell className={classes.tableBodyCell} align="left">{row.MapName1}</StyledTableCell>
                                     <StyledTableCell className={classes.tableBodyCell} align="left">{row.MapName2}</StyledTableCell>
                                     <StyledTableCell className={classes.tableBodyCell} align="left">{row.MapName3}</StyledTableCell>
-                                    <StyledTableCell className={classes.tableBodyCell} onClick={handleOpen} align="left" style={{ cursor: "pointer" }}><SearchIcon /></StyledTableCell>
-                                    <StyledTableCell className={classes.tableBodyCell} onClick={handleOpen} align="left" style={{ cursor: "pointer" }}><BorderColorIcon /></StyledTableCell>
+                                    <StyledTableCell className={classes.tableBodyCell} align="left" style={{ cursor: "pointer" }}><SearchIcon /></StyledTableCell>
+                                    <StyledTableCell onClick={() => handleedit(index)} className={classes.tableBodyCell} align="left" style={{ cursor: "pointer" }}><BorderColorIcon /></StyledTableCell>
                                     <StyledTableCell onClick={() => handledelete(index)} className={classes.tableBodyCell} align="left" style={{ cursor: "pointer" }}><DeleteIcon /></StyledTableCell>
                                 </StyledTableRow>
                             ))}
@@ -218,7 +251,69 @@ export default function CreateRecipe() {
                             </div>
                         </div>
                         <div className="popupboxbuttondiv" style={{ display: "flex" }}>
-                            <button className="popupboxbutton">Add New</button>
+                            <button className="popupboxbutton" onClick={submithandler}>Add New</button>
+                        </div>
+                    </form>
+                </Box>
+            </Modal>
+            <Modal
+                open={editopen}
+                onClose={handleEditClose}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+            >
+                <Box sx={style}>
+                    <form className="popupmain">
+                        <div className="popupbox" style={{ display: "flex" }}>
+                            <div className="popupboxinnerdiv">Parameter Name</div>
+                            <div className="popupboxinnerdiv1">
+                                <input type="text" value={editdata.ParameterName} onChange={handleInputChange} name="ParameterName" className="popupboxinput" />
+                            </div>
+                        </div>
+                        <div className="popupbox" style={{ display: "flex" }}>
+                            <div className="popupboxinnerdiv">Value</div>
+                            <div className="popupboxinnerdiv1">
+                                <input type="text" value={editdata.Value} onChange={handleInputChange} name="Value" className="popupboxinput" />
+                            </div>
+                        </div>
+                        <div className="popupbox" style={{ display: "flex" }}>
+                            <div className="popupboxinnerdiv">UOM</div>
+                            <div className="popupboxinnerdiv1">
+                                <input type="text" value={editdata.UOM} onChange={handleInputChange} name="UOM" className="popupboxinput" />
+                            </div>
+                        </div>
+                        <div className="popupbox" style={{ display: "flex" }}>
+                            <div className="popupboxinnerdiv">Min</div>
+                            <div className="popupboxinnerdiv1">
+                                <input type="text" value={editdata.Min} onChange={handleInputChange} name="Min" className="popupboxinput" />
+                            </div>
+                        </div>
+                        <div className="popupbox" style={{ display: "flex" }}>
+                            <div className="popupboxinnerdiv">Max</div>
+                            <div className="popupboxinnerdiv1">
+                                <input type="text" value={editdata.Max} onChange={handleInputChange} name="Max" className="popupboxinput" />
+                            </div>
+                        </div>
+                        <div className="popupbox" style={{ display: "flex" }}>
+                            <div className="popupboxinnerdiv">Map Name 1</div>
+                            <div className="popupboxinnerdiv1">
+                                <input type="text" value={editdata.MapName1} onChange={handleInputChange} name="MapName1" className="popupboxinput" />
+                            </div>
+                        </div>
+                        <div className="popupbox" style={{ display: "flex" }}>
+                            <div className="popupboxinnerdiv">Map Name 2</div>
+                            <div className="popupboxinnerdiv1">
+                                <input type="text" value={editdata.MapName2} onChange={handleInputChange} name="MapName2" className="popupboxinput" />
+                            </div>
+                        </div>
+                        <div className="popupbox" style={{ display: "flex" }}>
+                            <div className="popupboxinnerdiv">Map Name 3</div>
+                            <div className="popupboxinnerdiv1">
+                                <input type="text" value={editdata.MapName3} onChange={handleInputChange} name="MapName3" className="popupboxinput" />
+                            </div>
+                        </div>
+                        <div className="popupboxbuttondiv" style={{ display: "flex" }}>
+                            <button className="popupboxbutton" onClick={submithandler}>Save Edit</button>
                         </div>
                     </form>
                 </Box>
