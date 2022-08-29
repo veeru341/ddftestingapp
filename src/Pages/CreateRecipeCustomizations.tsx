@@ -54,6 +54,7 @@ const useStyles = makeStyles((theme) => ({
 
     table: {
         borderRadius: "0px"
+
     },
 
     tableContainer: {
@@ -142,16 +143,16 @@ export default function CreateRecipe() {
         setRows(rows.filter((i, j) => j !== index))
     }
 
-    const handleedit = (index : any) => {
-        setEditData(rows.filter((i, j) => j == index));
+    const handleedit = (index: any) => {
+        setEditData(rows.filter((i, j) => j === index));
         console.log("editing data checking", editdata)
         setEditOpen(true);;
     }
 
     return (
-        <Grid container style={{ padding: "20px", display:"flex", alignItems:"center", justifyContent:"center"}}>
+        <Grid container style={{ padding: "20px", display: "flex", alignItems: "center", justifyContent: "center" }}>
             <Grid item xs={12}>
-                <div style={{display:"flex",justifyContent:"space-around"}}>
+                <div style={{ display: "flex", justifyContent: "space-around" }}>
                     <button className="addnewbutton" onClick={handleOpen}>Add New</button>
                     <button className="addnewbutton" onClick={handleOpen}>Search</button>
                 </div>
@@ -267,53 +268,53 @@ export default function CreateRecipe() {
                         <div className="popupbox" style={{ display: "flex" }}>
                             <div className="popupboxinnerdiv">Parameter Name</div>
                             <div className="popupboxinnerdiv1">
-                                <input type="text" value={editdata.ParameterName} onChange={handleInputChange} name="ParameterName" className="popupboxinput" />
+                                <input type="text" value={inputdata.ParameterName} name="ParameterName" className="popupboxinput" />
                             </div>
                         </div>
                         <div className="popupbox" style={{ display: "flex" }}>
                             <div className="popupboxinnerdiv">Value</div>
                             <div className="popupboxinnerdiv1">
-                                <input type="text" value={editdata.Value} onChange={handleInputChange} name="Value" className="popupboxinput" />
+                                <input type="text" value={inputdata.Value} name="Value" className="popupboxinput" />
                             </div>
                         </div>
                         <div className="popupbox" style={{ display: "flex" }}>
                             <div className="popupboxinnerdiv">UOM</div>
                             <div className="popupboxinnerdiv1">
-                                <input type="text" value={editdata.UOM} onChange={handleInputChange} name="UOM" className="popupboxinput" />
+                                <input type="text" value={inputdata.UOM} name="UOM" className="popupboxinput" />
                             </div>
                         </div>
                         <div className="popupbox" style={{ display: "flex" }}>
                             <div className="popupboxinnerdiv">Min</div>
                             <div className="popupboxinnerdiv1">
-                                <input type="text" value={editdata.Min} onChange={handleInputChange} name="Min" className="popupboxinput" />
+                                <input type="text" value={inputdata.Min} name="Min" className="popupboxinput" />
                             </div>
                         </div>
                         <div className="popupbox" style={{ display: "flex" }}>
                             <div className="popupboxinnerdiv">Max</div>
                             <div className="popupboxinnerdiv1">
-                                <input type="text" value={editdata.Max} onChange={handleInputChange} name="Max" className="popupboxinput" />
+                                <input type="text" value={inputdata.Max} name="Max" className="popupboxinput" />
                             </div>
                         </div>
                         <div className="popupbox" style={{ display: "flex" }}>
                             <div className="popupboxinnerdiv">Map Name 1</div>
                             <div className="popupboxinnerdiv1">
-                                <input type="text" value={editdata.MapName1} onChange={handleInputChange} name="MapName1" className="popupboxinput" />
+                                <input type="text" value={inputdata.MapName1} name="MapName1" className="popupboxinput" />
                             </div>
                         </div>
                         <div className="popupbox" style={{ display: "flex" }}>
                             <div className="popupboxinnerdiv">Map Name 2</div>
                             <div className="popupboxinnerdiv1">
-                                <input type="text" value={editdata.MapName2} onChange={handleInputChange} name="MapName2" className="popupboxinput" />
+                                <input type="text" value={inputdata.MapName2} name="MapName2" className="popupboxinput" />
                             </div>
                         </div>
                         <div className="popupbox" style={{ display: "flex" }}>
                             <div className="popupboxinnerdiv">Map Name 3</div>
                             <div className="popupboxinnerdiv1">
-                                <input type="text" value={editdata.MapName3} onChange={handleInputChange} name="MapName3" className="popupboxinput" />
+                                <input type="text" value={inputdata.MapName3} name="MapName3" className="popupboxinput" />
                             </div>
                         </div>
                         <div className="popupboxbuttondiv" style={{ display: "flex" }}>
-                            <button className="popupboxbutton" onClick={submithandler}>Save Edit</button>
+                            <button className="popupboxbutton" onClick={submithandler}>Save</button>
                         </div>
                     </form>
                 </Box>
