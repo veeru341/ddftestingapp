@@ -97,9 +97,9 @@ export default function CreateRecipe() {
         <Grid container>
             <Grid container>
                 <Grid item xs={12} style={{ display: "flex", flexWrap: "wrap", justifyContent: "space-around" }}>
-                    <label className="createrecipelabeltop">Select Equipment Family</label>
-                    <label className="createrecipelabeltop">Select Equipment</label>
-                    <label className="createrecipelabeltop">Select Spec</label>
+                    <label className="createrecipelabeltop">Equipment Family</label>
+                    <label className="createrecipelabeltop">Equipment</label>
+                    <label className="createrecipelabeltop">Spec</label>
                     <label className="createrecipelabeltop">Product</label>
                     <label className="createrecipelabeltop">Process Spec</label>
                 </Grid>
