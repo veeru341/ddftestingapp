@@ -30,24 +30,83 @@ const initialData: any = {
             "id": "Schema2",
             "fields": [
                 {
-                    "component": "text-field",
-                    "name": "text-field-1659549441058"
-                },
-                {
-                    "component": "textarea",
-                    "name": "textarea-1659549442980"
-                },
-                {
-                    "component": "checkbox",
-                    "name": "checkbox-1659549445521"
+                    "component": "wizard",
+                    "name": "wizzard",
+                    "fields": [
+                        {
+                            "title": "Get started with adding source",
+                            "name": "step-1",
+                            "nextStep": {
+                                "when": "source-type",
+                                "stepMapper": {
+                                    "aws": "aws",
+                                    "google": "google"
+                                }
+                            },
+                            "fields": [
+                                {
+                                    "component": "textarea",
+                                    "name": "source-name",
+                                    "type": "text",
+                                    "label": "Source name"
+                                },
+                                {
+                                    "component": "select",
+                                    "name": "source-type",
+                                    "label": "Source type",
+                                    "isRequired": true,
+                                    "options": [
+                                        {
+                                            "label": "Please Choose"
+                                        },
+                                        {
+                                            "value": "aws",
+                                            "label": "Aws"
+                                        },
+                                        {
+                                            "value": "google",
+                                            "label": "Google"
+                                        }
+                                    ],
+                                    "validate": [
+                                        {
+                                            "type": "required"
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "title": "Configure AWS",
+                            "name": "aws",
+                            "fields": [
+                                {
+                                    "component": "text-field",
+                                    "name": "aws-field",
+                                    "label": "Aws field part"
+                                }
+                            ]
+                        },
+                        {
+                            "name": "google",
+                            "title": "Configure google",
+                            "fields": [
+                                {
+                                    "component": "text-field",
+                                    "name": "google-field",
+                                    "label": "Google field part"
+                                }
+                            ]
+                        }
+                    ]
                 }
             ]
         }
     ],
-    schemaview: [],
+schemaview: [],
     jsonstructure: [],
-    jsonstructureview: [],
-    isloggedin: false
+        jsonstructureview: [],
+            isloggedin: false
 }
 
 const schemaReducer = (state: any = initialData, action: Action): any => {

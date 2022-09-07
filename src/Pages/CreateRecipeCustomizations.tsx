@@ -1,482 +1,411 @@
-import React, { Fragment, useState } from 'react';
-import FormRenderer from '@data-driven-forms/react-form-renderer/form-renderer';
-import componentTypes from '@data-driven-forms/react-form-renderer/component-types';
-import FormTemplate from '@data-driven-forms/mui-component-mapper/form-template';
-import TextField from '@data-driven-forms/mui-component-mapper/text-field';
-import fieldArray from '@data-driven-forms/mui-component-mapper/field-array';
-import { Select, Radio, Checkbox, Textarea, FormFieldGrid } from '@data-driven-forms/mui-component-mapper';
-import useFormApi from '@data-driven-forms/react-form-renderer/use-form-api';
-import SendIcon from '@mui/icons-material/Send';
-import Grid from '@mui/material/Grid';
-import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, FormControl } from '@mui/material';
-import useFieldApi from '@data-driven-forms/react-form-renderer/use-field-api';
-import Editor from '@data-driven-forms/editor-pro/editor'
-
+import React, { Fragment, useState } from "react";
+import FormRenderer from "@data-driven-forms/react-form-renderer/form-renderer";
+import componentTypes from "@data-driven-forms/react-form-renderer/component-types";
+import TextField from "@data-driven-forms/mui-component-mapper/text-field";
+import Tabs from "@data-driven-forms/mui-component-mapper/tabs";
+import Wizard from "@data-driven-forms/mui-component-mapper/wizard";
+import Checkbox from "@data-driven-forms/mui-component-mapper/checkbox";
+import fieldArray from "@data-driven-forms/mui-component-mapper/field-array";
+import { Select, Radio, Textarea, FormFieldGrid, DatePicker } from "@data-driven-forms/mui-component-mapper";
+import useFormApi from "@data-driven-forms/react-form-renderer/use-form-api";
+import SendIcon from "@mui/icons-material/Send";
+import BorderColorIcon from '@mui/icons-material/BorderColor';
+import DeleteIcon from '@mui/icons-material/Delete';
+import Grid from "@mui/material/Grid";
 import {
-  DataGridPro,
-  GridApi,
-  GridCellValue,
-  GridColDef,
-  GridRenderCellParams,
-  GridValueGetterParams,
-  useGridApiRef
-} from '@mui/x-data-grid-pro';
-import { propsToClassKey } from '@mui/styles';
-
-
-const columns: GridColDef[] = [
-  { 
-    field: "id",
-    headerName: "ID",
-    width: 90
-  },
-  {
-    field: "parameter",
-    headerName: "Parameter",
-    width: 150,
-    editable: true
-  },
-  {
-    field: "lastName",
-    headerName: "Value",
-    width: 150,
-    editable: true
-  },
-  {
-    field: "education",
-    headerName: "UOM",
-    width: 150,
-    editable: true
-  },
-  {
-    field: "min",
-    headerName: "Min",
-    width: 150,
-    editable: true
-  },
-  {
-    field: "max",
-    headerName: "Max",
-    width: 150,
-    editable: true
-  },
-  {
-    field: "mapName1",
-    headerName: "Map Name 1",
-    width: 150,
-    editable: true
-  }
-];
-
-
-//START- Schema
-const schema2 = {
-  fields: [
-    {
-      name: 'layout',
-      component: 'two-columns',
-      "fields": [
-        {
-          component: 'select',
-          name: 'parameter',
-          label: 'Select Equipment Family',
-          options: [
-            { value: 'Thickness', label: 'Thickness' },
-            { value: 'Spin Speed', label: 'Spin Speed' },
-            { value: 'Recipe Name', label: 'Recipe Name' }
-          ]
-        },
-        {
-          component: 'select',
-          name: 'lastName',
-          label: 'Select Equipment',
-          options: [
-            { value: '0.7', label: '0.7' },
-            { value: '2', label: '2' },
-            { value: 'ETCH', label: 'ETCH' }
-          ]
-        },
-        {
-          component: 'select',
-          name: 'education',
-          label: 'Select Spec',
-          options: [
-            { value: 'mm', label: 'mm' },
-            { value: 'kk', label: 'kk' },
-            { value: 'Text', label: 'Text' }
-          ]
-        },
-        {
-          component: 'select',
-          name: 'min',
-          label: 'Product',
-          options: [
-            { value: '0.5', label: '3' },
-            { value: '3', label: '3' },
-            { value: 'sample text', label: 'sample text' }
-          ]
-        },
-        {
-          component: 'select',
-          name: 'max',
-          label: 'Process Spec',
-          options: [
-            { value: '0.9', label: '0.9' },
-            { value: '5', label: '5' },
-            { value: 'sample text', label: 'sample text' }
-          ]
-        },
-        {
-          "component": "text-field",
-          "name": "Comments",
-          "label": "Comments",
-          resolveProps: (props: any, { meta, input }: any, formOptions: any) => {
-            console.log("Commnets: " + input.value);
-          },
-        },
-        {
-          "component": "button",
-          "name": "btn3",
-          "label": "Get Details ",
-          icon: <SendIcon />,
-          clickhandler: (formOptions: any) => {
-            {
-              fetch("https://jsonplaceholder.typicode.com/posts")
-                .then(res => res.json())
-                .then(
-                  (result) => {
-                    formOptions.change('Comments', JSON.stringify(result));
-
-                  },
-                  (error) => {
-                    alert('Error');
-                  }
-                )
-            }
-          },
-          resolveProps: (props: any, { meta, input }: any, formOptions: any) => {
-            console.log("btn: " + props);
-          }
-        },
-        {
-          "component": "button",
-          "name": "btn",
-          "label": "Copy Text",
-          icon: <SendIcon />,
-          clickhandler: (formOptions: any) => {
-            formOptions.change('Comments', formOptions.getState().values.Name);
-          },
-          resolveProps: (props: any, { meta, input }: any, formOptions: any) => {
-            console.log("btn: " + props);
-          }
-        },
-        {
-          "component": "button",
-          "name": "btn2",
-          "label": "Add Recipe",
-          icon: <SendIcon />,
-          clickhandler: (formOptions: any) => {
-            let newid= Math.trunc(Math.random()*100);
-            let newrows = [{
-              id:newid,
-              parameter: formOptions.getState('Parameter').values.parameter,
-              lastName: formOptions.getState('LastName').values.lastName,
-              education: formOptions.getState('Education').values.education,
-              min: formOptions.getState('Min').values.min,
-              max: formOptions.getState('Max').values.max,
-              mapName1: formOptions.getState('Max').values.max,
-              handlRows : formOptions.schema.fields[0].fields[12].handleClick,
-              form :formOptions.schema.fields[0].fields[12].formAPI[0],
-              grid :formOptions.schema.fields[0].fields[12].gridAPI[0]
-            }];
-            formOptions.schema.fields[0].fields[12].gridAPI[0].current.updateRows(newrows);
-            formOptions.change('mygrid',JSON.stringify(formOptions.schema.fields[0].fields[12].value));
-            formOptions.schema.fields[0].fields[8].options.push({ value: Math.random() * 100, label: formOptions.getState().values.Name });
-          },
-          resolveProps: (props: any, { meta, input }: any, formOptions: any) => {
-            console.log("btn: " + props);
-          }
-        },
-        {
-          "component": "filler",
-          "name": "filler1",
-          "label": "filler1",
-          xs: "4",
-          onBlur: (e: any) => { },
-        },
-        {
-          "component": "filler",
-          "name": "filler1",
-          "label": "filler1",
-          xs: "12",
-          onBlur: (e: any) => { },
-        },
-        {
-          component: 'field-array',
-          name: 'empList',
-          id: 'fieldArray',
-          label: 'Add Employee',
-          noItemsMessage: 'None',
-          buttonLabels: {
-            add: 'Add',
-            remove: 'Remove'
-          },
-          AddButtonProps: {
-            size: 'small'
-          },
-          RemoveButtonProps: {
-            size: 'small'
-          },
-          fields: [
-            {
-              component: 'text-field',
-              name: 'Add Employee',
-              label: 'Text'
-            },
-            {
-              component: 'select',
-              name: 'select',
-              label: 'Emp Type',
-              options: [
-                { value: 'Admin', label: 'Admin' },
-                { value: 'Dev', label: 'Dev' }
-              ]
-            }
-          ]
-        },
-        {
-          component: "dgrid",
-          name: "mygrid",
-          columns: columns,
-          gridAPI:[],
-          formAPI:[],
-          rows: [
-            { id: 1, parameter: "sample", lastName: "sample text", education: "sample text", min : "sample text", max: "sample text"},
-            { id: 2, parameter: "sample", lastName: "sample text", education: "sample text", min : "sample text", max: "sample text"},
-          ],
-          handleClick: (a: any, b: any,gridAPi:any) => {
-            // debugger;
-            let x = JSON.parse(a).fullName;
-            b.change("Name", x);
-          },
-          resolveProps: (props: any, { meta, input }: any, formOptions: any) => {
-            debugger;
-            console.log("grid: " + input.value);
-          },
-        }
-      ]
-    }
-  ]
-};
-
-
-
-//END- Schema
-
-const TwoColumns = ({ fields }: any) => {
-  const formOptionss = useFormApi();
-
-  return (
-    <Fragment>
-      <Grid container spacing={2} style={{ display: 'flex', margin: 20 }}>
-        {fields.map((field: any) => (
-
-          ((field.component != "dgrid"&& field.component != "filler") && (<Grid key={field.name} item xs={4} >
-            {(field.component == "select") &&
-              (<div style={{ marginTop: "-16px" }}>
-                {formOptionss.renderForm([field])}
-              </div>)}
-
-            {(field.component != "select") &&
-              (<div >
-                {formOptionss.renderForm([field])}
-              </div>)
-            }
-          </Grid>))
-          ||
-
-          ((field.component == "dgrid") && (<Grid key={field.name} item xs={12} >
-            {(field.component == "select") &&
-              (<div style={{ marginTop: "-16px" }}>
-                {formOptionss.renderForm([field])}
-              </div>)}
-
-            {(field.component != "select") &&
-              (<div >
-                {formOptionss.renderForm([field])}
-              </div>)
-            }
-          </Grid>))
-
-
-          ||
-
-          ((field.component == "filler") && (<Grid key={field.name} item xs={field.xs} >
-            {(field.component == "select") &&
-              (<div style={{ marginTop: "-16px" }}>
-                {formOptionss.renderForm([field])}
-              </div>)}
-
-            {(field.component != "select") &&
-              (<div >
-                {formOptionss.renderForm([field])}
-              </div>)
-            }
-          </Grid>))
-
-
-        ))}
-      </Grid>
-    </Fragment>
-  );
-};
-
-const Filler = (props: any) => {
-  const {
-    input,
-    isReadOnly,
-    isDisabled,
-    placeholder,
-    isRequired,
-    label,
-    helperText,
-    description,
-    validateOnMount,
-    meta,
-    inputProps,
-    FormFieldGridProps,
-    ...rest
-  } = useFieldApi(props);
-  const formApi = useFormApi();
-  // const invalid = validationError(meta, validateOnMount);
-  return (
-    <FormFieldGrid {...FormFieldGridProps}>
-
-      <div>
-        {/* <input type="text" name={input.name} style={{display:"none"}}/> */}
-      </div>
-      {/* <Button variant="contained" endIcon={props.icon} name={input.name} onClick={(e) => {
-        props.clickhandler(formApi);
-      }}>
-        {label}
-      </Button> */}
-      {/* <input type="button" value="HEllo"/> */}
-    </FormFieldGrid>
-
-  )
-}
-
-const Button2 = (props: any) => {
-  const {
-    input,
-    isReadOnly,
-    isDisabled,
-    placeholder,
-    isRequired,
-    label,
-    helperText,
-    description,
-    validateOnMount,
-    meta,
-    inputProps,
-    FormFieldGridProps,
-    ...rest
-  } = useFieldApi(props);
-  const formApi = useFormApi();
-  // const invalid = validationError(meta, validateOnMount);
-  return (
-    <FormFieldGrid {...FormFieldGridProps}>
-      <Button variant="contained" endIcon={props.icon} name={input.name} onClick={(e) => {
-        props.clickhandler(formApi);
-      }}>
-        {label}
-      </Button>
-      {/* <input type="button" value="HEllo"/> */}
-    </FormFieldGrid>
-
-  )
-}
-
-const Grd = (props: any) => {
-  const {
-    input,
-    isReadOnly,
-    isDisabled,
-    placeholder,
-    isRequired,
-    label,
-    helperText,
-    description,
-    validateOnMount,
-    meta,
-    inputProps,
-    FormFieldGridProps,
-    ...rest
-  } = useFieldApi(props);
-  const formApi = useFormApi();
-  const apiRef = useGridApiRef();
-  // const invalid = validationError(meta, validateOnMount);
-  props.gridAPI[0] = apiRef;
-  props.formAPI[0] = formApi;
-  props.rows.forEach((element: any) => {
-    element.handlRows = props.handleClick;
-    element.form = formApi;
-    element.grid = apiRef;
-  });
-  debugger;
-  input.value = JSON.stringify(props.rows, (key, value) => {
-    if (key == "form" || key == "grid" || key == "handleRows") {
-      // alert();
-      return "";
-    }
-    return value;
-  });
-  debugger;
-  return (
-
-    <FormFieldGrid {...FormFieldGridProps}>
-      <div  style={{ height: 250, width: "100%" }} >
-        <DataGridPro   apiRef={apiRef}
-          rows={props.rows}
-          columns={props.columns}
-          pageSize={5}
-          rowsPerPageOptions={[5]}
-          checkboxSelection
-          // disableSelectionOnClick
-        />
-      </div>
-    </FormFieldGrid>
-  )
-}
+    Button,
+    Dialog,
+    DialogActions,
+    DialogContent,
+    DialogContentText,
+    DialogTitle,
+    FormControl,
+} from "@mui/material";
+import useFieldApi from "@data-driven-forms/react-form-renderer/use-field-api";
+import {
+    DataGridPro,
+    GridApi,
+    GridCellValue,
+    GridColDef,
+    GridRenderCellParams,
+    GridValueGetterParams,
+    useGridApiRef,
+} from "@mui/x-data-grid-pro";
+import DDFButton from "../CustomControls/DDFButton";
+import DdfGrid from "../CustomControls/DdfGrid";
+import Filler from "../CustomControls/Filler";
+import TwoColumnLayout from '../CustomControls/TwoColumnLayout'
+import { styled } from '@mui/material/styles';
+import Paper from '@mui/material/Paper';
+import MuiFormTemplate from '@data-driven-forms/mui-component-mapper/form-template';
 
 const componentMapper = {
-  [componentTypes.TEXT_FIELD]: TextField,
-  [componentTypes.RADIO]: Radio,
-  [componentTypes.SELECT]: Select,
-  [componentTypes.CHECKBOX]: Checkbox,
-  [componentTypes.TEXTAREA]: Textarea,
-  [componentTypes.BUTTON]: Button2,
-  [componentTypes.FIELD_ARRAY]: fieldArray,
-  'two-columns': TwoColumns,
-  'dgrid': Grd,
-  'filler': Filler
+    [componentTypes.TEXT_FIELD]: TextField,
+    [componentTypes.WIZARD]: Wizard,
+    [componentTypes.RADIO]: Radio,
+    [componentTypes.SELECT]: Select,
+    [componentTypes.CHECKBOX]: Checkbox,
+    [componentTypes.TEXTAREA]: Textarea,
+    [componentTypes.FIELD_ARRAY]: fieldArray,
+    [componentTypes.TABS]: Tabs,
+    [componentTypes.DATE_PICKER]: DatePicker,
+    "demogrid": DdfGrid,
+    "Button": DDFButton,
+    "TwoColumnLayout": TwoColumnLayout,
+    "Filler": Filler
 };
+const FormTemplate = (props: any) => <MuiFormTemplate {...props} showFormControls={false} />
 
 
-const App = () => (
+const Item = styled(Paper)(({ theme }) => ({
+    backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
+    ...theme.typography.body2,
+    padding: theme.spacing(1),
+    textAlign: 'center',
+    color: theme.palette.text.secondary,
+}));
+
+export default function Createrecipe2() {
+    const columns: GridColDef[] = [
+        { field: "col1", headerName: "Parameter", width: 140, editable: true },
+        { field: "col2", headerName: "Value", width: 140, editable: true },
+        { field: "col3", headerName: "UOM", width: 140, editable: true },
+        { field: "col4", headerName: "Max", width: 140, editable: true },
+        { field: "col5", headerName: "Min", width: 140, editable: true },
+        { field: "col6", headerName: "Map Name 1", width: 140, editable: true },
+        { field: "col7", headerName: "Map Name 2", width: 140, editable: true },
+        { field: "col8", headerName: "Map Name 3", width: 140, editable: true },
+        {
+            field: "col9", headerName: "", width: 150,
+            renderCell: (params: any) => {
+                return (
+                    <>
+                        <Button onClick={() => {
+                            console.log(params.row);
+                            params.row.EditClick(params.row, params.row.form, params.row.grid);
+                        }}><BorderColorIcon /></Button>
+
+                        <Button onClick={() => {
+                            console.log(params.row);
+                            params.row.DeleteClick(params.row, params.row.form, params.row.grid);
+                        }}><DeleteIcon /></Button>
+
+                    </>);
+
+            }
+        },
+    ];
+
+    const [gridrows, setGridRows] = useState([
+        { id: 1, col1: "Thickness", col2: "0.7", col3: "mm", col4: "0.5", col5: "0.9", col6: "sample text", col7: "sample text", col8: "sample text", col9: "" },
+        { id: 2, col1: "Spin Speed", col2: "2", col3: "kk", col4: "3", col5: "5", col6: "sample text", col7: "sample text", col8: "sample text", col9: "" },
+        { id: 3, col1: "Recipe Name", col2: "ETCH", col3: "Text", col4: "sample text", col5: "sample text", col6: "sample text", col7: "sample text", col8: "sample text", col9: "" }
+    ]);
+
+    var schema3 = {
+
+        "fields": [
+            {
+                "component": "wizard",
+                "name": "wizzard",
+                "fields": [
+                    {
+                        "title": "Get started with adding source",
+                        "name": "step-1",
+                        "nextStep": "nextstep1",
+                        "fields": [
+                            {
+                                "component": "select",
+                                "name": "source-name",
+                                "label": "Select Equipment Family",
+                                "options": [
+                                    {
+                                        "value": "new value 1",
+                                        "label": "new value 1"
+                                    },
+                                    {
+                                        "value": "new value 2",
+                                        "label": "new value 2"
+                                    },
+                                ],
+                            },
+                            {
+                                "component": "select",
+                                "name": "source-type",
+                                "label": "Select Equipment",
+                                "isRequired": true,
+                                "options": [
+                                    {
+                                        "value": "new value 1",
+                                        "label": "new value 2"
+                                    },
+                                    {
+                                        "value": "new value 1",
+                                        "label": "new value 2"
+                                    }
+                                ],
+                                "validate": [
+                                    {
+                                        "type": "required"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "title": "nextstep1",
+                        "name": "nextstep1",
+                        "nextStep": "nextstep2",
+                        "fields": [
+                            {
+                                "component": "select",
+                                "name": "aws-field1",
+                                "label": "Select Spec",
+                                "options": [
+                                    {
+                                        "value": "new value 1",
+                                        "label": "new value 1"
+                                    },
+                                    {
+                                        "value": "new value 2",
+                                        "label": "new value 2"
+                                    }
+                                ],
+                            },
+                            {
+                                "component": "select",
+                                "name": "aws-field2",
+                                "label": "Select Process Spec",
+                                "options": [
+                                    {
+                                        "value": "new value 1",
+                                        "label": "new value 1"
+                                    },
+                                    {
+                                        "value": "new value 2",
+                                        "label": "new value 2"
+                                    }
+                                ],
+                            },
+                            {
+                                "component": "select",
+                                "name": "aws-field3",
+                                "label": "Select Product",
+                                "options": [
+                                    {
+                                        "value": "table1",
+                                        "label": "new value 1"
+                                    },
+                                    {
+                                        "value": "table2",
+                                        "label": "new value 2"
+                                    }
+                                ],
+                            },
+                        ]
+                    },
+                    {
+                        "component": "wizard",
+                        "name": "nextstep2",
+                        "fields": [
+                            {
+                                "component": "tabs",
+                                "name": "tabs",
+                                "fields": [
+                                    {
+                                        "name": "1",
+                                        "title": "Detail",
+                                        "description": "Here you can find fruits",
+                                        "fields": [
+                                            {
+                                                "component": "TwoColumnLayout",
+                                                "name": "TwoColumnLayout",
+                                                "fields": [
+                                                    {
+                                                        component: 'text-field',
+                                                        label: "Parameter",
+                                                        name: "col1",
+                                                    },
+                                                    {
+                                                        component: 'text-field',
+                                                        label: "value",
+                                                        name: "col2",
+                                                    },
+                                                    {
+                                                        component: 'text-field',
+                                                        label: "UOM",
+                                                        name: "col3",
+                                                    },
+                                                    {
+                                                        component: 'text-field',
+                                                        label: "Min",
+                                                        name: "col4",
+                                                    },
+                                                    {
+                                                        component: 'text-field',
+                                                        label: "Max",
+                                                        name: "col5",
+                                                    },
+                                                    {
+                                                        component: 'text-field',
+                                                        label: "Map Name 1",
+                                                        name: "col6",
+                                                    },
+                                                    {
+                                                        component: 'text-field',
+                                                        label: "Map Name 2",
+                                                        name: "col7",
+                                                    },
+                                                    {
+                                                        component: 'text-field',
+                                                        label: "Map Name 3",
+                                                        name: "col8",
+                                                    },
+                                                    {
+                                                        "component": "Filler",
+                                                        "name": "filler1",
+                                                        "label": "filler1",
+                                                        xs: "6",
+                                                        onBlur: (e: any) => { },
+                                                    },
+                                                    {
+                                                        component: "Button",
+                                                        label: "Checkbox",
+                                                        name: "Add New",
+                                                        icon: <SendIcon />,
+                                                        clickHandler: (formOptions: any) => {
+                                                            debugger;
+                                                            var col11 = formOptions.getState().values.col1;
+                                                            var col12 = formOptions.getState().values.col2;
+                                                            var col13 = formOptions.getState().values.col3;
+                                                            var col14 = formOptions.getState().values.col4;
+                                                            var col15 = formOptions.getState().values.col5;
+                                                            var col16 = formOptions.getState().values.col6;
+                                                            var col17 = formOptions.getState().values.col7;
+                                                            var col18 = formOptions.getState().values.col8;
+                                                            setGridRows([...gridrows, {
+                                                                id: Math.trunc(Math.random() * 100),
+                                                                col1: col11,
+                                                                col2: col12,
+                                                                col3: col13,
+                                                                col4: col14,
+                                                                col5: col15,
+                                                                col6: col16,
+                                                                col7: col17,
+                                                                col8: col18,
+                                                                col9: ""
+                                                            }])
+
+                                                            formOptions.change("col1", "");
+                                                            formOptions.change("col2", "");
+                                                            formOptions.change("col3", "");
+                                                            formOptions.change("col4", "");
+                                                            formOptions.change("col5", "");
+                                                            formOptions.change("col6", "");
+                                                            formOptions.change("col7", "");
+                                                            formOptions.change("col8", "");
+                                                        },
+                                                    },
+                                                    {
+                                                        component: "Button",
+                                                        label: "Checkbox1",
+                                                        name: "Search",
+                                                        icon: <SendIcon />
+                                                    },
+                                                ]
+                                            },
+                                            {
+                                                "component": "Filler",
+                                                "name": "filler1",
+                                                "label": "filler1",
+                                                xs: "6",
+                                                onBlur: (e: any) => { },
+                                            },
+                                            {
+                                                component: "demogrid",
+                                                label: "hello",
+                                                name: "adf",
+                                                rows: gridrows,
+                                                columns: columns,
+                                                checkboxSelection: false,
+                                                gridApi: [],
+                                                formOptions: [],
+                                                //Signature is tied to render cell method of GridColumn
+                                                EditClick: (data: any, formAPI: any, gridAPI: any) => {
+                                                    formAPI.change('col1', data.col1);
+                                                    formAPI.change('col2', data.col2);
+                                                    formAPI.change('col3', data.col3);
+                                                    formAPI.change('col4', data.col4);
+                                                    formAPI.change('col5', data.col5);
+                                                    formAPI.change('col6', data.col6);
+                                                    formAPI.change('col7', data.col7);
+                                                    formAPI.change('col8', data.col8);
+                                                    formAPI.change('id', data.id);
+                                                },
+                                                //Signature is tied to render cell method of GridColumn
+                                                DeleteClick: (data: any, formAPI: any, gridAPI: any) => {
+                                                    debugger
+                                                    var cht: any[] = [];
+                                                    gridAPI.current.getRowModels().forEach((x: any) => {
+                                                        var k: any = {};
+                                                        Object.keys(x).forEach((element2) => {
+                                                            if (typeof x[element2] != 'function') {
+                                                                k[element2] = x[element2];
+                                                            }
+                                                        });
+                                                        cht.push(k)
+                                                    });
 
 
-  <>
-    <FormRenderer FormTemplate={FormTemplate} componentMapper={componentMapper} schema={schema2} onSubmit={(d) => alert(JSON.stringify(d))} />
-    {/* <br />
-    <hr />
-    <h1>Form Editor</h1>
-    <div style={{ marginTop: "30px" }}>
-      <Editor />
-    </div> */}
+                                                    setGridRows(cht.filter(x => x.id != data.id && x.col1 != data.col1 && x.col2 != data.col2))
+                                                },
+                                            },
+                                            {
+                                                component: "Button",
+                                                label: "Save",
+                                                name: "Save",
+                                                icon: <SendIcon />,
+                                                clickHandler: (formOptions: any) => {
+                                                    alert("saved grid data to db");
+                                                },
+                                            },
 
+                                        ],
+                                    },
 
-  </>
-);
-
-export default App;
+                                    {
+                                        "name": "2",
+                                        "title": "matrix",
+                                        "description": "Here you can find vegetables",
+                                        "fields": [
+                                            {
+                                                "name": "Details",
+                                                "label": "Details",
+                                                "title": "Details",
+                                                "component": "text-field"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+    return (
+        <Grid container direction="row" justifyContent="center" alignItems="center" style={{ height: "90vh" }}>
+            <Grid item style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+                <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "space-between" }}>
+                    <FormRenderer
+                        schema={schema3}
+                        FormTemplate={FormTemplate}
+                        componentMapper={componentMapper}
+                        onSubmit={console.log}
+                    />
+                </div>
+            </Grid>
+        </Grid >
+    );
+}

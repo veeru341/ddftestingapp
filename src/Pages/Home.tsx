@@ -146,7 +146,7 @@ export default function CustomizedTables() {
       <Grid item lg={12} xs={12}>
         <div style={{ display: "flex", justifyContent: "flex-end", marginRight: "50px" }}>
           <Link to="searchrecipe"><button style={{ height: "60px", backgroundColor: "white", border: "1px solid black", fontSize: "18px", padding: "20px", cursor: "pointer"}}>Search Recipe</button></Link>
-          <Link to="createrecipewizard"><button style={{ height: "60px", backgroundColor: "white", border: "1px solid black", fontSize: "18px", padding: "20px", marginLeft: "30px", cursor: "pointer" }}>Create Update Recipe</button></Link>
+          <Link to="createrecipecustomizations"><button style={{ height: "60px", backgroundColor: "white", border: "1px solid black", fontSize: "18px", padding: "20px", marginLeft: "30px", cursor: "pointer" }}>Create Update Recipe</button></Link>
         </div>
       </Grid>
     </Grid>)

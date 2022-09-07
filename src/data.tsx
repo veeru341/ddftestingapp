@@ -1,76 +1,141 @@
-export const schemadata : any = [
-    { "id" : "Schema1",
-      "fields": [
-        {
-          "component": "text-field",
-          "name": "text-field-1659509592815"
-        },
-        {
-          "component": "text-field",
-          "name": "text-field-1659509595879"
-        },
-        {
-          "component": "select",
-          "name": "select-1659518569025"
-        }
-      ]
-    },
-    {   "id" : "Schema2",
-      "fields": [
-        {
-          "component": "text-field",
-          "name": "text-field-1659509592815"
-        },
-        {
-          "component": "text-field",
-          "name": "text-field-1659509595879"
-        },
-        {
-          "component": "select",
-          "name": "select-1659518569025"
-        }
-      ]
-    },
-    {"id" : "Schema3",
-      "fields": [
-        {
-          "component": "checkbox",
-          "name": "checkbox-1659519433936"
-        },
-        {
-          "component": "textarea",
-          "name": "textarea-1659519437708"
-        }
-      ]
-    },
+export default {
+  "fields": [
     {
-        "id" : "Schema4",
+      "component": "wizard",
+      "name": "wizzard",
       "fields": [
         {
-          "component": "text-field",
-          "name": "text-field-1659520468285"
+          "title": "Get started with adding source",
+          "name": "step-1",
+          "nextStep": "nextstep1",
+          "fields": [
+            {
+              "component": "select",
+              "name": "source-name",
+              "label": "Select Equipment Family",
+              "options": [
+                {
+                  "value": "new value 1",
+                  "label": "new value 1"
+                },
+                {
+                  "value": "new value 2",
+                  "label": "new value 2"
+                },
+              ],
+            },
+            {
+              "component": "select",
+              "name": "source-type",
+              "label": "Select Equipment",
+              "isRequired": true,
+              "options": [
+                {
+                  "value": "new value 1",
+                  "label": "new value 2"
+                },
+                {
+                  "value": "new value 1",
+                  "label": "new value 2"
+                }
+              ],
+              "validate": [
+                {
+                  "type": "required"
+                }
+              ]
+            }
+          ]
         },
         {
-          "component": "textarea",
-          "name": "textarea-1659520470524"
-        }
-      ]
-    },
-    {
-        "id" : "Schema5",
-      "fields": [
-        {
-          "component": "text-field",
-          "name": "text-field-1659549441058"
+          "title": "nextstep1",
+          "name": "nextstep1",
+          "nextStep": "nextstep2",
+          "fields": [
+            {
+              "component": "select",
+              "name": "aws-field1",
+              "label": "Select Spec",
+              "options": [
+                {
+                  "value": "new value 1",
+                  "label": "new value 1"
+                },
+                {
+                  "value": "new value 2",
+                  "label": "new value 2"
+                }
+              ],
+            },
+            {
+              "component": "select",
+              "name": "aws-field2",
+              "label": "Select Process Spec",
+              "options": [
+                {
+                  "value": "new value 1",
+                  "label": "new value 1"
+                },
+                {
+                  "value": "new value 2",
+                  "label": "new value 2"
+                }
+              ],
+            },
+            {
+              "component": "select",
+              "name": "aws-field3",
+              "label": "Select Product",
+              "options": [
+                {
+                  "value": "table1",
+                  "label": "new value 1"
+                },
+                {
+                  "value": "table2",
+                  "label": "new value 2"
+                }
+              ],
+            },
+          ]
         },
         {
-          "component": "textarea",
-          "name": "textarea-1659549442980"
-        },
-        {
-          "component": "checkbox",
-          "name": "checkbox-1659549445521"
+          "title": "nextstep2",
+          "name": "nextstep2",
+          "fields": [
+            {
+              "component": "select",
+              "name": "aws-field5",
+              "label": "Select Spec",
+              "options": [
+                {
+                  "value": "new value 1",
+                  "label": "new value 1"
+                },
+                {
+                  "value": "new value 2",
+                  "label": "new value 2"
+                }
+              ],
+            },
+            {
+              "component": "select",
+              "name": "aws-field6",
+              "label": "Select Spec",
+              "options": [
+                {
+                  "value": "new value 1",
+                  "label": "new value 1"
+                },
+                {
+                  "value": "new value 2",
+                  "label": "new value 2"
+                }
+              ],
+            }
+          ]
         }
       ]
     }
   ]
+};
