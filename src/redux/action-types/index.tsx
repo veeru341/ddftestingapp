@@ -6,5 +6,6 @@ export enum ActionType {
     DELETESCHEMA = "deleteschema",
     JSONSTRUCTURE = "jsonstructure",
     JSONSTRUCTUREEDIT = "jsonstructureedit",
-    JSONSTRUCTUREEDITSAVE = "jsonstructureeditsave"
+    JSONSTRUCTUREEDITSAVE = "jsonstructureeditsave",
+    TABLEDATA = "tabledata"
 }

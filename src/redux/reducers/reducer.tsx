@@ -103,10 +103,14 @@ const initialData: any = {
             ]
         }
     ],
-schemaview: [],
+    schemaview: [],
     jsonstructure: [],
-        jsonstructureview: [],
-            isloggedin: false
+    jsonstructureview: [],
+    isloggedin: false,
+
+    
+
+
 }
 
 const schemaReducer = (state: any = initialData, action: Action): any => {

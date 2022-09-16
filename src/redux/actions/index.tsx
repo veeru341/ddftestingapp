@@ -40,4 +40,9 @@ interface JsonStructureEditSave {
     payload: any
 }
 
-export type Action = DepositAction | WithdrawAction | EditScehmaAction | IsLoggedinAction | DeleteSchemaAction | JsonStructure | JsonStructureEdit | JsonStructureEditSave
+interface TableData {
+    type: ActionType.TABLEDATA,
+    payload: any
+}
+
+export type Action = DepositAction | WithdrawAction | EditScehmaAction | IsLoggedinAction | DeleteSchemaAction | JsonStructure | JsonStructureEdit | JsonStructureEditSave | TableData

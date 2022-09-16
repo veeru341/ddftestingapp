@@ -117,6 +117,9 @@ function Header() {
                         <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                             <Link to="/" className="navigationhome">Home</Link>
                         </Typography>
+                        <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+                            <Link to="/editexperimentplan" className="navigationhome">Edit Experiment Plan</Link>
+                        </Typography>
                         <Typography variant="h6" component="div" sx={{ p: 0 }}>
                             <Link to="/login" className="navigationhome" style={{ cursor: "pointer" }} onClick={handleLogin}>Logout</Link>
                         </Typography>

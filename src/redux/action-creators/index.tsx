@@ -73,3 +73,12 @@ export const jsonstructureeditsave = (amount: any) => {
         })
     }
 }
+
+export const tabledata = (amount: any) => {
+    return (dispatch: Dispatch<Action>) => {
+        dispatch({
+            type: ActionType.TABLEDATA,
+            payload: amount
+        })
+    }
+}

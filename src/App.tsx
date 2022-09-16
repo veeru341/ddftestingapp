@@ -10,11 +10,10 @@ import Schemasui from "./Pages/Schemasui";
 import { useSelector } from 'react-redux';
 import Settings from "./Pages/Settings";
 import SearchRecipe from "./Pages/SearchRecipe";
-import CreateRecipeWizard from './Pages/CreateRecipeWizard';
-import CreateRecipeWizard2 from './Pages/CreateRecipeWizard2';
 import CreateRecipe from "./Pages/CreateRecipe"
 import JsonEditStructure from "./components/JsonEditStructure";
-import CreateRecipeCustomizations from './Pages/CreateRecipeCustomizations';
+import CreateRecipeCustomizations from './Pages/CreateRecipe';
+import EditExperimentPlan from "./Pages/EditExperimentPlan"
 
 export default function App() {
 
@@ -33,11 +32,10 @@ export default function App() {
               <Route path="/schemasui" element={<Schemasui />} />
               <Route path="/editschema" element={<EditSchema />} />
               <Route path="/settings" element={<Settings />} />
-              <Route path="/createrecipewizard" element={<CreateRecipeWizard />} />
-              <Route path="/createrecipewizard2" element={<CreateRecipeWizard2 />} />
               <Route path="/createrecipe" element={<CreateRecipe />} />
               <Route path="/searchrecipe" element={<SearchRecipe />} />
               <Route path="/login" element={<Login />} />
+              <Route path="/editexperimentplan" element={<EditExperimentPlan />} />
               <Route path="/jsoneditstructure" element={<JsonEditStructure />} />
               <Route path="/createrecipecustomizations" element={<CreateRecipeCustomizations />} />
             </Routes>
