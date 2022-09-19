@@ -1,15 +1,15 @@
 import React from "react";
 import useFormApi from "@data-driven-forms/react-form-renderer/use-form-api";
 
-const CustomColumnLayout = ({ fields }: any) => {
+const CreateRecipeWizardCCL = ({ fields }: any) => {
   const formOptionss = useFormApi();
 
   const { renderForm } = useFormApi();
 
   return (
-    <div style={{marginTop:20, marginLeft:30}}>
+    <div style={{display:"flex", flexDirection:"column", justifyContent:"center", alignItems:"center", width:"100%", height:"70vh"}}>
       {fields.map((field: any) => (
-        <div key={field.name} style={{}}>
+        <div key={field.name} style={{width:"30%"}}>
             {renderForm([field])}
         </div>
       ))}
@@ -17,4 +17,4 @@ const CustomColumnLayout = ({ fields }: any) => {
   );
 };
 
-export default CustomColumnLayout;
+export default CreateRecipeWizardCCL;

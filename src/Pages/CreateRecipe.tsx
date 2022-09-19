@@ -30,6 +30,7 @@ import Filler from "../CustomControls/Filler";
 import TwoColumnLayout from '../CustomControls/TwoColumnLayout';
 import SingleColumnLayout from "../CustomControls/SingleColumnLayout"
 import MuiFormTemplate from '@data-driven-forms/mui-component-mapper/form-template';
+import CreateRecipeWizardCCL from "../CustomControls/CreateRecipeWizardCCL"
 
 const componentMapper = {
     [componentTypes.TEXT_FIELD]: TextField,
@@ -46,6 +47,7 @@ const componentMapper = {
     "Button": DDFButton,
     "TwoColumnLayout": TwoColumnLayout,
     "SingleColumnLayout": SingleColumnLayout,
+    "CreateRecipeWizardCCL" : CreateRecipeWizardCCL,
     "Filler": Filler
 };
 
@@ -75,9 +77,7 @@ export default function Createrecipe2() {
                             console.log(params.row);
                             params.row.DeleteClick(params.row, params.row.form, params.row.grid);
                         }}><DeleteIcon /></Button>
-
                     </>);
-
             }
         },
     ];
@@ -89,13 +89,13 @@ export default function Createrecipe2() {
     ]);
 
     const matrixcolumns: GridColDef[] = [
-        { field: "matrixcol1", headerName: "Equipment family", width: 180 },
-        { field: "matrixcol2", headerName: "Equipment", width: 180 },
-        { field: "matrixcol3", headerName: "Spec", width: 180 },
-        { field: "matrixcol4", headerName: "Product", width: 180 },
-        { field: "matrixcol5", headerName: "Process Spec", width: 180 },
-        { field: "matrixcol6", headerName: "Last Modified", width: 180 },
-        { field: "matrixcol7", headerName: "Modified By", width: 180 }
+        { field: "matrixcol1", headerName: "Equipment family", width: 185 },
+        { field: "matrixcol2", headerName: "Equipment", width: 185 },
+        { field: "matrixcol3", headerName: "Spec", width: 185 },
+        { field: "matrixcol4", headerName: "Product", width: 185 },
+        { field: "matrixcol5", headerName: "Process Spec", width: 185 },
+        { field: "matrixcol6", headerName: "Last Modified", width: 185 },
+        { field: "matrixcol7", headerName: "Modified By", width: 185 }
     ];
 
     const matrixgridrows = [
@@ -116,32 +116,38 @@ export default function Createrecipe2() {
                         "nextStep": "nextstep1",
                         "fields": [
                             {
-                                "component": "select",
-                                "name": "source-name",
-                                "label": "Select Equipment Family",
-                                "options": [
+                                "component": "CreateRecipeWizardCCL",
+                                "name": "CreateRecipeWizardCCL",
+                                "fields": [
                                     {
-                                        "value": "new value 1",
-                                        "label": "new value 1"
+                                        "component": "select",
+                                        "name": "source-name",
+                                        "label": "Select Equipment Family",
+                                        "options": [
+                                            {
+                                                "value": "new value 1",
+                                                "label": "new value 1"
+                                            },
+                                            {
+                                                "value": "new value 2",
+                                                "label": "new value 2"
+                                            },
+                                        ],
                                     },
                                     {
-                                        "value": "new value 2",
-                                        "label": "new value 2"
-                                    },
-                                ],
-                            },
-                            {
-                                "component": "select",
-                                "name": "source-type",
-                                "label": "Select Equipment",
-                                "options": [
-                                    {
-                                        "value": "new value 1",
-                                        "label": "new value 2"
-                                    },
-                                    {
-                                        "value": "new value 1",
-                                        "label": "new value 2"
+                                        "component": "select",
+                                        "name": "source-type",
+                                        "label": "Select Equipment",
+                                        "options": [
+                                            {
+                                                "value": "new value 1",
+                                                "label": "new value 2"
+                                            },
+                                            {
+                                                "value": "new value 1",
+                                                "label": "new value 2"
+                                            }
+                                        ]
                                     }
                                 ]
                             }
@@ -153,50 +159,56 @@ export default function Createrecipe2() {
                         "nextStep": "nextstep2",
                         "fields": [
                             {
-                                "component": "select",
-                                "name": "aws-field1",
-                                "label": "Select Spec",
-                                "options": [
+                                "component": "CreateRecipeWizardCCL",
+                                "name": "CreateRecipeWizardCCL",
+                                "fields": [
                                     {
-                                        "value": "new value 1",
-                                        "label": "new value 1"
+                                        "component": "select",
+                                        "name": "aws-field1",
+                                        "label": "Select Spec",
+                                        "options": [
+                                            {
+                                                "value": "new value 1",
+                                                "label": "new value 1"
+                                            },
+                                            {
+                                                "value": "new value 2",
+                                                "label": "new value 2"
+                                            }
+                                        ],
                                     },
                                     {
-                                        "value": "new value 2",
-                                        "label": "new value 2"
-                                    }
-                                ],
-                            },
-                            {
-                                "component": "select",
-                                "name": "aws-field2",
-                                "label": "Select Process Spec",
-                                "options": [
-                                    {
-                                        "value": "new value 1",
-                                        "label": "new value 1"
+                                        "component": "select",
+                                        "name": "aws-field2",
+                                        "label": "Select Process Spec",
+                                        "options": [
+                                            {
+                                                "value": "new value 1",
+                                                "label": "new value 1"
+                                            },
+                                            {
+                                                "value": "new value 2",
+                                                "label": "new value 2"
+                                            }
+                                        ],
                                     },
                                     {
-                                        "value": "new value 2",
-                                        "label": "new value 2"
-                                    }
-                                ],
-                            },
-                            {
-                                "component": "select",
-                                "name": "aws-field3",
-                                "label": "Select Product",
-                                "options": [
-                                    {
-                                        "value": "table1",
-                                        "label": "new value 1"
+                                        "component": "select",
+                                        "name": "aws-field3",
+                                        "label": "Select Product",
+                                        "options": [
+                                            {
+                                                "value": "table1",
+                                                "label": "new value 1"
+                                            },
+                                            {
+                                                "value": "table2",
+                                                "label": "new value 2"
+                                            }
+                                        ],
                                     },
-                                    {
-                                        "value": "table2",
-                                        "label": "new value 2"
-                                    }
-                                ],
-                            },
+                                ]
+                            }
                         ]
                     },
                     {
@@ -299,14 +311,8 @@ export default function Createrecipe2() {
                                                             formOptions.change("col6", "");
                                                             formOptions.change("col7", "");
                                                             formOptions.change("col8", "");
-                                                        },
-                                                    },
-                                                    {
-                                                        component: "Button",
-                                                        label: "Checkbox1",
-                                                        name: "Search",
-                                                        icon: <SendIcon />
-                                                    },
+                                                        }
+                                                    }
                                                 ]
                                             },
                                             {
@@ -399,7 +405,7 @@ export default function Createrecipe2() {
         ]
     }
     return (
-        <Grid container spacing={3}>
+        <Grid container spacing={3} style={{height:"90vh"}}>
             <Grid xs item>
                 <FormRenderer
                     schema={schema3}
@@ -408,6 +414,6 @@ export default function Createrecipe2() {
                     onSubmit={console.log}
                 />
             </Grid>
-        </Grid>
+        </Grid >
     );
 }

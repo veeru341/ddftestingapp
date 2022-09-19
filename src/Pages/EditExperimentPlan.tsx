@@ -8,17 +8,29 @@ import Checkbox from "@data-driven-forms/mui-component-mapper/checkbox";
 import fieldArray from "@data-driven-forms/mui-component-mapper/field-array";
 import { Select, Radio, Textarea, DatePicker } from "@data-driven-forms/mui-component-mapper";
 import Grid from "@mui/material/Grid";
-import TwoColumnLayout from '../CustomControls/TwoColumnLayout';
-import SingleColumnLayout from "../CustomControls/SingleColumnLayout";
-import MuiFormTemplate from '@data-driven-forms/mui-component-mapper/form-template';
-import SendIcon from "@mui/icons-material/Send";
-import FourColumnLayout from "../CustomControls/FourColumnLayout";
-import BorderColorIcon from '@mui/icons-material/BorderColor';
-import { Button } from "@mui/material";
 import { GridColDef } from "@mui/x-data-grid-pro";
 import DDFButton from "../CustomControls/DDFButton";
 import DdfGrid from "../CustomControls/DdfGrid";
 import Filler from "../CustomControls/Filler";
+import TwoColumnLayout from '../CustomControls/TwoColumnLayout';
+import SingleColumnLayout from "../CustomControls/SingleColumnLayout";
+import FourColumnLayout from "../CustomControls/FourColumnLayout";
+import EditExperimentPlanGrid from "../CustomControls/EditExperimentPlanGrid";
+import MuiFormTemplate from '@data-driven-forms/mui-component-mapper/form-template';
+import {
+    Button,
+    Dialog,
+    DialogActions,
+    DialogContent,
+    DialogContentText,
+    DialogTitle,
+    FormControl,
+} from "@mui/material";
+import BorderColorIcon from '@mui/icons-material/BorderColor';
+import HeightIcon from '@mui/icons-material/Height';
+import SendIcon from "@mui/icons-material/Send";
+import SettingsIcon from '@mui/icons-material/Settings';
+import CreateOutlinedIcon from '@mui/icons-material/CreateOutlined';
 
 const componentMapper = {
     [componentTypes.TEXT_FIELD]: TextField,
@@ -34,6 +46,7 @@ const componentMapper = {
     "Button": DDFButton,
     "TwoColumnLayout": TwoColumnLayout,
     "SingleColumnLayout": SingleColumnLayout,
+    "EditExperimentPlanGrid": EditExperimentPlanGrid,
     "FourColumnLayout" : FourColumnLayout,
     "Filler": Filler
 };
@@ -43,14 +56,14 @@ const FormTemplate = (props: any) => <MuiFormTemplate {...props} showFormControl
 export default function EditExperimentPlan() {
 
     const detailcolumns: GridColDef[] = [
-        { field: "detailscol1", headerName: "Parameter", width: 160, editable: true },
-        { field: "detailscol2", headerName: "Value", width: 160, editable: true },
-        { field: "detailscol3", headerName: "UOM", width: 160, editable: true },
-        { field: "detailscol4", headerName: "Max", width: 160, editable: true },
-        { field: "detailscol5", headerName: "Min", width: 160, editable: true },
-        { field: "detailscol6", headerName: "Map Name 1", width: 160, editable: true },
-        { field: "detailscol7", headerName: "Map Name 2", width: 160, editable: true },
-        { field: "detailscol8", headerName: "Map Name 3", width: 160, editable: true }
+        { field: "detailscol1", headerName: "Parameter", width: 160, editable: true, flex: 1 },
+        { field: "detailscol2", headerName: "Value", width: 160, editable: true, flex: 1 },
+        { field: "detailscol3", headerName: "UOM", width: 160, editable: true, flex: 1 },
+        { field: "detailscol4", headerName: "Max", width: 160, editable: true, flex: 1 },
+        { field: "detailscol5", headerName: "Min", width: 160, editable: true, flex: 1 },
+        { field: "detailscol6", headerName: "Map Name 1", width: 160, editable: true, flex: 1 },
+        { field: "detailscol7", headerName: "Map Name 2", width: 160, editable: true, flex: 1 },
+        { field: "detailscol8", headerName: "Map Name 3", width: 160, editable: true, flex: 1 }
     ]
 
     const [detailsgridrows, setDetailsGridRows] = useState([
@@ -62,23 +75,87 @@ export default function EditExperimentPlan() {
 
     const workflowcolumns: GridColDef[] = [
         {
-            field: "workflowcol1", headerName: "Actions", width: 150,
+            field: "workflowcol1", headerName: "", width: 150, flex: 1, headerClassName: 'super-app-theme--header',
             renderCell: (params: any) => {
                 return (
-                    <>
-                        <Button onClick={() => {
-                            console.log(params.row);
-                            params.row.EditClick(params.row, params.row.form, params.row.grid);
-                        }}><BorderColorIcon /></Button>
-                    </>);
-
-            }
+                    <div style={{display:"flex", justifyContent:"center", alignItems:"center", width:"100%"}}>
+                        <CreateOutlinedIcon />
+                    </div>
+                );
+            },
+            renderHeader: (params: any) => (
+                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginTop: "-30px" }}>
+                    <div>
+                        Actions
+                    </div>
+                    <div style={{ display: "flex", marginLeft: "20px" }}>
+                        <HeightIcon style={{ width: "20px" }} />
+                    </div>
+                </div>
+            )
         },
-        { field: "workflowcol2", headerName: "Workflow", width: 220, editable: true },
-        { field: "workflowcol3", headerName: "Sequence", width: 220, editable: true },
-        { field: "workflowcol4", headerName: "Step", width: 220, editable: true },
-        { field: "workflowcol5", headerName: "Description", width: 220, editable: true },
-        { field: "workflowcol6", headerName: "settings", width: 205, editable: true }
+        {
+            field: "workflowcol2", headerName: "", flex: 3, renderHeader: (params: any) => (
+                <div style={{ display: "flex", alignItems: "center", justifyContent: "center", marginTop: "-30px" }}>
+                    <div style={{ display: "flex", flexDirection: "column" }}>
+                        Workflow
+                        <input type="text" style={{ border: 0, marginTop: "-20px", width: "250px", height: "30px" }} />
+                    </div>
+                    <div style={{ display: "flex", marginLeft: "10px" }}>
+                        <HeightIcon style={{ width: "20px" }} />
+                    </div>
+                </div>
+            ),
+        },
+        {
+            field: "workflowcol3", headerName: "", flex: 3,
+            renderHeader: (params: any) => (
+                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginTop: "-30px" }}>
+                    <div>
+                        Sequence
+                    </div>
+                    <div style={{ display: "flex", marginLeft: "180px" }}>
+                        <HeightIcon style={{ width: "20px" }} />
+                    </div>
+                </div>
+            )
+        }, 
+        {
+            field: "workflowcol4", headerName: "", flex: 3, renderHeader: (params: any) => (
+                <div style={{ display: "flex", alignItems: "center", justifyContent: "center", marginTop: "-30px" }}>
+                    <div style={{ display: "flex", flexDirection: "column" }}>
+                        Step
+                        <input type="text" style={{ border: 0, marginTop: "-20px", width: "250px", height: "30px" }} />
+                    </div>
+                    <div style={{ display: "flex", marginLeft: "10px" }}>
+                        <HeightIcon style={{ width: "20px" }} />
+                    </div>
+                </div>
+            ),
+        },
+        {
+            field: "workflowcol5", headerName: "", flex: 3,
+            renderHeader: (params: any) => (
+                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginTop: "-30px" }}>
+                    <div>
+                        Description
+                    </div>
+                    <div style={{ display: "flex", marginLeft: "180px" }}>
+                        <HeightIcon style={{ width: "20px" }} />
+                    </div>
+                </div>
+            )
+        },
+        {
+            field: "workflowcol6", headerName: "", flex: 0.5,
+            renderHeader: (params: any) => (
+                <div style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
+                    <div>
+                        <SettingsIcon style={{ width: "20px" }} />
+                    </div>
+                </div>
+            )
+        },
     ];
 
     const [workflowgridrows, setWorkflowGridRows] = useState([
@@ -123,7 +200,7 @@ export default function EditExperimentPlan() {
                         "description": "details",
                         "fields": [
                             {
-                                component: "demogrid",
+                                component: "EditExperimentPlanGrid",
                                 label: "detailstab",
                                 name: "detailstab",
                                 rows: detailsgridrows,
@@ -140,7 +217,7 @@ export default function EditExperimentPlan() {
                         "description": "workflow",
                         "fields": [
                             {
-                                component: "demogrid",
+                                component: "EditExperimentPlanGrid",
                                 label: "workflowtab",
                                 name: "workflowtab",
                                 rows: workflowgridrows,
@@ -202,7 +279,7 @@ export default function EditExperimentPlan() {
                         "description": "experiment plan details",
                         "fields": [
                             {
-                                component: "demogrid",
+                                component: "EditExperimentPlanGrid",
                                 label: "experimentplandetails",
                                 name: "experimentplandetails",
                                 rows: epdgridrows,
@@ -264,7 +341,7 @@ export default function EditExperimentPlan() {
     }
 
     return (
-        <Grid container style={{ padding: "20px" }} >
+        <Grid container style={{ padding: "20px" }}>
             <Grid item xs={12}>
                 <FormRenderer
                     schema={eepschema3}

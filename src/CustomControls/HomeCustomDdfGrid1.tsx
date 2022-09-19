@@ -30,22 +30,32 @@ const HomeCustomDdfGrid1 = (props: any) => {
   });
   input.onChange(cht);
   return (
-    <>
-      <div style={{ height: "250px", width:"600px" }}>
-        <div style={{width:"600px", backgroundColor:"rgb(221, 221, 221)", fontSize:"25px", height:"50px", display:"flex", alignContent:"center", justifyContent:"center", marginBottom:"20px"}}>
-            <p style={{marginTop:"12px"}}>Product recipes (Last 7 Days)</p>
+      <div style={{ height: "250px", width: "600px", margin: 0, padding: 0 }}>
+        <div style={{ width: "600px", backgroundColor: "rgb(221, 221, 221)", fontSize: "25px", height: "50px", display: "flex", alignContent: "center", justifyContent: "center", marginBottom: "20px" }}>
+          <p style={{ marginTop: "12px" }}>Product recipes (Last 7 Days)</p>
         </div>
         <DataGridPro
           experimentalFeatures={{ newEditingApi: true }}
+          getRowHeight={() => 40}
+          sx={{
+            "& .MuiDataGrid-columnHeaders": {
+              color: "#21C5D2",
+              fontSize: 15,
+              borderRadius: 0
+            }
+          }}
           apiRef={apiRef}
+          headerHeight={40}
           rows={cht.rows}
           columns={cht.columns}
           checkboxSelection={cht.checkboxSelection}
-          style={{fontSize:"13px"}}
-          className="MuiDataGrid-actionsCell MuiDataGrid-aggregationColumnHeader--alignCenter"
+          autoHeight
+          onStateChange={(state) => {
+            //debugger;
+          }}
+          style={{borderRadius:0}}
         />
       </div>
-    </>
   );
 };
 

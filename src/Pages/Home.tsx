@@ -101,15 +101,15 @@ export default function Home() {
   }
 
   return (
-    <Grid container style={{display:"flex", justifyContent:"center", alignItems:"center", height:"90vh"}}>
-      <Grid item xs={12} lg={6}>
+    <Grid container justifyContent="center" alignItems="center" style={{height:"90vh", padding:20}}>
+      <Grid item md={12} lg={6} style={{margin:0, padding: 0}}>
         <FormRenderer
           schema={productRecipesSchema1}
           FormTemplate={FormTemplate}
           componentMapper={componentMapper}
         />
       </Grid>
-      <Grid item xs={12} lg={6}>
+      <Grid item md={12} lg={6} style={{margin: 0, padding: 0}}>
         <FormRenderer
           schema={productRecipesSchema2}
           FormTemplate={FormTemplate}
@@ -117,7 +117,7 @@ export default function Home() {
         />
       </Grid>
       <Grid item lg={12} xs={12}>
-        <div style={{ display: "flex", justifyContent: "flex-end", marginRight: "45px" }}>
+        <div style={{ display: "flex", justifyContent: "flex-end", marginRight: "35px" }}>
           <Link to="searchrecipe"><button style={{ height: "60px", backgroundColor: "white", border: "1px solid black", fontSize: "18px", padding: "20px", cursor: "pointer" }}>Search Recipe</button></Link>
           <Link to="createrecipe"><button style={{ height: "60px", backgroundColor: "white", border: "1px solid black", fontSize: "18px", padding: "20px", marginLeft: "30px", cursor: "pointer" }}>Create Update Recipe</button></Link>
         </div>

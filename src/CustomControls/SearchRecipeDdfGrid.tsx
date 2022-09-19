@@ -30,21 +30,28 @@ const DdfGrid = (props: any) => {
   });
   input.onChange(cht);
   return (
-    <>
-      <div style={{ height: "310px", width: "100%" }}>
-        <DataGridPro
-          experimentalFeatures={{ newEditingApi: true }}
-          apiRef={apiRef}
-          rows={cht.rows}
-          columns={cht.columns}
-          checkboxSelection={cht.checkboxSelection}
-          style={{borderRadius:"0px"}}
-          onStateChange={(state) => {
-            //debugger;
-          }}
-        />
-      </div>
-    </>
+    <DataGridPro
+      experimentalFeatures={{ newEditingApi: true }}
+      getRowHeight={() => 50}
+      sx={{
+        "& .MuiDataGrid-columnHeaders": {
+          color: "#21C5D2",
+          fontSize: 15,
+          height: 100,
+          borderRadius: 0
+        }
+      }}
+      apiRef={apiRef}
+      rows={cht.rows}
+      headerHeight={50}
+      columns={cht.columns}
+      checkboxSelection={cht.checkboxSelection}
+      autoHeight
+      onStateChange={(state) => {
+        //debugger;
+      }}
+      style={{borderRadius:"0px"}}
+    />
   );
 };
 
